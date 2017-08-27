@@ -1,0 +1,42 @@
+<h3>Articles du blog DBM</h3>
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th class="data-grid-th">ID</th>
+        <th class="data-grid-th">Title</th>
+        <th class="data-grid-th">Like</th>
+        <th class="data-grid-th">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    $newsList = $this->getData('news');
+    if (!empty($newsList)) :
+        $oddRow = false;
+        foreach ($newsList as $news) :
+            if ($oddRow) {
+                $oddRowCss = '_odd-row';
+                $oddRow = false;
+            } else {
+                $oddRowCss = '';
+                $oddRow = true;
+            }
+            ?>
+            <tr class="data-row <?php echo $oddRowCss ?>">
+                <td><a href="<?php echo $news->getUrl() ?>" target="_blank"><?php echo $news->getId() ?></a></td>
+                <td><?php echo $news->getTitle() ?></td>
+                <td><?php echo $news->getLike() ?></td>
+                <td><?php echo $news->getDate() ?></td>
+            </tr>
+            <?php
+        endforeach;
+    else:
+        ?>
+        <tr>
+            <td colspan="4">Il n'y a pas de news.</td>
+        </tr>
+        <?php
+    endif;
+    ?>
+    </tbody>
+</table>
